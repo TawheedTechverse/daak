@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Daak Stamp Maker</title>
+<meta name="description" content="Daak — make your own Bangladeshi postage stamp from a photo and send it with a letter.">
+<!--FONTS--><link rel="stylesheet" href="fonts/fonts.css"><!--/FONTS-->
+<!--CSS--><link rel="stylesheet" href="css/style.css"><!--/CSS-->
+</head>
+<body>
+
+<div class="splash" id="splash">
+  <div class="sp-stamp">
+    <canvas id="spPaper" width="600" height="760"></canvas>
+    <div class="sp-inner"><div class="sp-bn" id="spBn"></div><div class="sp-en" id="spEn"></div></div>
+    <div class="sp-mark" id="spMark">BANGLADESH<br>DAAK<br><span id="spYear"></span></div>
+  </div>
+  <div class="sp-sub" id="spSub">In search of old letters</div>
+  <button type="button" class="sp-skip" id="spSkip" data-t="skip">Skip</button>
+</div>
+
+<div class="pdf-anim" id="pdfAnim" aria-hidden="true">
+  <div class="pdf-anim-stage">
+    <svg class="pdf-anim-box" viewBox="0 0 300 420" aria-hidden="true">
+      <defs>
+        <linearGradient id="boxRed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e2604f"/>
+          <stop offset="45%" stop-color="#c7392d"/>
+          <stop offset="100%" stop-color="#7c1a10"/>
+        </linearGradient>
+        <linearGradient id="plateRed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#9c2a1f"/>
+          <stop offset="100%" stop-color="#6e170f"/>
+        </linearGradient>
+        <clipPath id="boxClip">
+          <path d="M40,150 A110,110 0 0 1 260,150 L260,370 Q260,392 238,392 L62,392 Q40,392 40,370 Z"/>
+        </clipPath>
+        <filter id="boxGrain" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/>
+          <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .4 0"/>
+        </filter>
+      </defs>
+      <path d="M40,150 A110,110 0 0 1 260,150 L260,370 Q260,392 238,392 L62,392 Q40,392 40,370 Z" fill="url(#boxRed)" stroke="#54100a" stroke-width="3"/>
+      <g clip-path="url(#boxClip)">
+        <ellipse cx="92" cy="115" rx="48" ry="95" fill="#fff" opacity=".1" transform="rotate(-10 92 115)"/>
+        <rect x="40" y="40" width="220" height="352" filter="url(#boxGrain)" opacity=".5"/>
+      </g>
+      <rect x="100" y="183" width="100" height="18" rx="7" fill="#17100c"/>
+      <rect x="100" y="183" width="100" height="5" rx="2.5" fill="#000" opacity=".4"/>
+      <rect x="68" y="228" width="164" height="66" rx="9" fill="url(#plateRed)" stroke="#4a0f09" stroke-width="2"/>
+      <text x="150" y="270" text-anchor="middle" font-family="'Hind Siliguri', sans-serif" font-weight="700" font-size="34" fill="#f6ecd9" letter-spacing="1">চিঠির বাক্স</text>
+      <rect x="93" y="310" width="114" height="58" rx="7" fill="url(#plateRed)" stroke="#4a0f09" stroke-width="2"/>
+      <text x="150" y="332" text-anchor="middle" font-family="'Hind Siliguri', sans-serif" font-weight="600" font-size="15" fill="#f0e3cf">খোলার সময়</text>
+      <text x="150" y="358" text-anchor="middle" font-family="'Hind Siliguri', sans-serif" font-weight="700" font-size="20" fill="#f6ecd9">১৩·৩০</text>
+      <circle cx="150" cy="378" r="4.5" fill="#17100c"/>
+      <rect x="147.5" y="380" width="5" height="8" fill="#17100c"/>
+      <circle cx="78" cy="238" r="3" fill="#4a0f09"/>
+      <circle cx="222" cy="238" r="3" fill="#4a0f09"/>
+      <circle cx="78" cy="284" r="3" fill="#4a0f09"/>
+      <circle cx="222" cy="284" r="3" fill="#4a0f09"/>
+      <rect x="52" y="388" width="20" height="16" rx="3" fill="#5c130c"/>
+      <rect x="228" y="388" width="20" height="16" rx="3" fill="#5c130c"/>
+    </svg>
+    <div class="pdf-anim-letter"></div>
+  </div>
+  <p class="pdf-anim-label" data-t="posting">Posting your letter…</p>
+</div>
+
+<div id="ytAudio" class="yt-audio" aria-hidden="true"></div>
+<button type="button" class="music-toggle" id="musicToggle" aria-pressed="false" aria-label="Play background music">&#128264;</button>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#" id="home" aria-label="Daak"><span class="bnl" id="logoBn"></span><span class="enl">DAAK</span></a>
+    <nav class="tabs" role="tablist" aria-label="Pages">
+      <button type="button" role="tab" id="tabStamp" aria-selected="true" aria-controls="viewStamp" data-t="tabStamp">Stamp maker</button>
+      <button type="button" role="tab" id="tabLetter" aria-selected="false" aria-controls="viewLetter" data-t="tabLetter">Letter</button>
+    </nav>
+    <div class="seg lang" role="group" aria-label="Language">
+      <button type="button" data-l="en" aria-pressed="true">ENG</button>
+      <button type="button" data-l="bn" aria-pressed="false">বাংলা</button>
+    </div>
+  </div>
+</header>
+
+<div class="lamp-glow" aria-hidden="true"></div>
+<div class="lamp-wrap">
+  <button type="button" class="lamp-toggle" id="lampToggle" aria-pressed="false" aria-label="Light the hurricane lamp (toggle dark mode)">
+    <svg class="lamp-svg" viewBox="0 0 64 150" aria-hidden="true">
+      <path class="lamp-rope" d="M32 0 V22" stroke="#9c8a63" stroke-width="2" fill="none"/>
+      <circle cx="32" cy="24" r="4.5" fill="none" stroke="#7a6a46" stroke-width="3"/>
+      <path d="M19 32 Q32 16 45 32" fill="none" stroke="#6b5a3a" stroke-width="3.5" stroke-linecap="round"/>
+      <rect x="20" y="30" width="24" height="9" rx="2" fill="#7a6a46"/>
+      <path d="M22 39 L17 92" stroke="#7a6a46" stroke-width="2.5" fill="none"/>
+      <path d="M42 39 L47 92" stroke="#7a6a46" stroke-width="2.5" fill="none"/>
+      <path d="M32 39 L32 92" stroke="#7a6a46" stroke-width="2" fill="none" opacity=".55"/>
+      <path d="M18 48 Q13 70 21 88 Q32 97 43 88 Q51 70 46 48 Q32 39 18 48 Z" fill="rgba(255,214,140,.16)" stroke="#a88a52" stroke-width="1.5"/>
+      <circle class="lamp-flame" cx="32" cy="70" r="7" fill="#ffce6b"/>
+      <rect x="15" y="92" width="34" height="11" rx="3" fill="#8e2318"/>
+      <rect x="21" y="103" width="22" height="7" rx="2" fill="#6b1b12"/>
+    </svg>
+  </button>
+</div>
+
+<main class="wrap">
+  <!-- ============ STAMP MAKER ============ -->
+  <section id="viewStamp" role="tabpanel" aria-labelledby="tabStamp">
+    <div class="hero">
+      <h1 class="disp" data-t="heroStamp">Make your own Bangladeshi stamp</h1>
+      <p data-t="heroStampSub">Upload a photo, pick a template, choose your district and value, then save it for your chats.</p>
+    </div>
+    <div class="grid">
+      <div class="preview">
+        <div class="stage"><canvas id="cv" width="1080" height="1350" aria-label="Stamp preview"></canvas></div>
+        <div class="upload">
+          <label class="btn primary" for="photo" data-t="upload">Upload your photo</label>
+          <input class="sr" type="file" id="photo" accept="image/*">
+          <p class="note" id="photoNote" data-t="sample">Showing a sample photo</p>
+        </div>
+      </div>
+
+      <form class="slip" id="stampForm" autocomplete="off">
+        <fieldset>
+          <legend data-t="templates">Templates</legend>
+          <div class="gallery" id="gallery"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend data-t="details">Stamp details</legend>
+          <div class="row">
+            <label class="f"><span data-t="district">District</span><select id="district"></select></label>
+            <label class="f"><span data-t="value">Value</span><select id="value"></select></label>
+          </div>
+          <label class="f"><span data-t="caption">Caption</span><select id="caption"></select></label>
+          <div class="row" id="customCap" hidden>
+            <label class="f"><span data-t="capEn">Caption in English</span><input type="text" id="capEn" maxlength="34"></label>
+            <label class="f"><span data-t="capBn">Caption in Bangla</span><input type="text" id="capBn" maxlength="24"></label>
+          </div>
+          <div class="row">
+            <label class="f"><span data-t="letteringBn">Bangla lettering</span><select id="bnFont"></select></label>
+            <label class="f"><span data-t="letteringEn">English lettering</span><select id="enFont"></select></label>
+          </div>
+          <div class="row">
+            <label class="f" id="colourWrap"><span data-t="colour">Ink colour</span><select id="colour"></select></label>
+            <label class="check"><input type="checkbox" id="postmark"><span data-t="postmark">Add postmark</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend data-t="photo">Photo</legend>
+          <div class="row">
+            <label class="f"><span data-t="zoom">Zoom</span><input type="range" id="zoom" min="1" max="2.5" step="0.01" value="1"></label>
+            <label class="f"><span data-t="move">Move up / down</span><input type="range" id="posY" min="-1" max="1" step="0.01" value="0"></label>
+          </div>
+          <label class="f"><span data-t="ink">Ink strength</span><input type="range" id="ink" min="0.6" max="1.8" step="0.01" value="1.1"></label>
+        </fieldset>
+
+        <fieldset>
+          <legend data-t="save">Save</legend>
+          <div class="seg" role="group" aria-label="Size" id="sizeSeg" style="justify-self:start">
+            <button type="button" data-h="1350" aria-pressed="true" data-t="post">Post 4:5</button>
+            <button type="button" data-h="1920" aria-pressed="false" data-t="story">Story 9:16</button>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn primary" id="savePng"><span class="latin">PNG</span></button>
+            <button type="button" class="btn primary" id="saveJpg"><span class="latin">JPG</span></button>
+            <button type="button" class="btn" id="saveSticker"><span data-t="sticker">Sticker</span></button>
+            <button type="button" class="btn" id="shareImg" hidden><span data-t="share">Share</span></button>
+          </div>
+          <p class="note" data-t="stickerNote">Transparent WebP sticker for chats.</p>
+          <p class="status" id="stampStatus" role="status"></p>
+          <button type="button" class="btn red" id="toLetter" style="justify-self:start"><span data-t="sendLetter">Send it with a letter</span> <span aria-hidden="true" class="latin">→</span></button>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ LETTER ============ -->
+  <section id="viewLetter" role="tabpanel" aria-labelledby="tabLetter" hidden>
+    <div class="hero">
+      <h1 class="disp" data-t="heroLetter">Write a letter</h1>
+      <p data-t="heroLetterSub">Your stamp goes on the envelope. Write a message, add a seal, and download a 16:9 PDF to share.</p>
+    </div>
+    <div class="grid">
+      <div class="preview">
+        <div class="pages" id="pages" aria-label="Letter pages"></div>
+        <div class="dots" id="dots"></div>
+      </div>
+
+      <form class="slip" id="letterForm" autocomplete="off">
+        <div class="attached"><canvas id="miniStamp" width="84" height="106"></canvas><p class="note" data-t="stampUsed">Your stamp from the Stamp maker is attached.</p></div>
+
+        <fieldset>
+          <legend data-t="letterLang">Letter language</legend>
+          <div class="seg" role="group" id="letterLang" style="justify-self:start">
+            <button type="button" data-ll="bn" aria-pressed="false" style="font-family:var(--bn-input)">বাংলা</button>
+            <button type="button" data-ll="en" aria-pressed="true" class="latin">English</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend data-t="seal">Seal photo</legend>
+          <label class="check"><input type="radio" name="sealSrc" value="same" checked><span data-t="sealSame">Use my stamp photo</span></label>
+          <label class="check"><input type="radio" name="sealSrc" value="other"><span data-t="sealOther">Upload a different photo</span></label>
+          <input type="file" id="sealPhoto" accept="image/*" hidden>
+        </fieldset>
+
+        <fieldset>
+          <legend data-t="message">Your message</legend>
+          <textarea id="message" rows="6" data-ph="msgPh"></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend data-t="sender">Sender</legend>
+          <div class="row">
+            <label class="f"><span data-t="name">Name</span><input type="text" id="sName" maxlength="40" data-ph="namePh"></label>
+            <label class="f"><span data-t="address">Address</span><input type="text" id="sAddr" maxlength="90" data-ph="addrPh"></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-t="receiver">Receiver</legend>
+          <div class="row">
+            <label class="f"><span data-t="name">Name</span><input type="text" id="rName" maxlength="40" data-ph="namePh"></label>
+            <label class="f"><span data-t="address">Address</span><input type="text" id="rAddr" maxlength="90" data-ph="addrPh"></label>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button type="button" class="btn primary" id="savePdf"><span data-t="pdf">Download PDF</span></button>
+          <button type="button" class="btn" id="sharePdf" hidden><span data-t="sharePdf">Share PDF</span></button>
+        </div>
+        <p class="status" id="letterStatus" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p class="footer-dev">Developer — <strong>MD Tawheed Ul Islam</strong></p>
+  <p>A product of <strong>TechVerse</strong></p>
+  <p class="footer-series">In the series of <em>Preserving Old Goods</em></p>
+</footer>
+
+<script src="vendor/jspdf.umd.min.js"></script>
+<!--JS-->
+<script src="js/bijoy.js"></script>
+<script src="js/data.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/letter.js"></script>
+<script src="js/app.js"></script>
+<!--/JS-->
+</body>
+</html>
