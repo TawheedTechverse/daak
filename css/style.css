@@ -187,4 +187,7 @@ body.bn .gallery span[data-t] { font-size: 13px; }
   animation: musicPulse 2.4s ease-in-out infinite;
 }
 .music-toggle:hover { transform: scale(1.06); }
+.music-toggle.invite { animation: musicInvite 2.2s ease-in-out infinite; }
+@keyframes musicInvite { 0%, 100% { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent), inset 0 -1px 2px rgba(0, 0, 0, .08), 0 6px 16px var(--shadow), 0 0 0 0 color-mix(in srgb, var(--red) 55%, transparent); } 50% { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent), inset 0 -1px 2px rgba(0, 0, 0, .08), 0 6px 16px var(--shadow), 0 0 0 7px color-mix(in srgb, var(--red) 0%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .music-toggle.invite { animation: none; } }
 @keyframes musicPulse { 0%, 100% { box-shadow: 0 6px 16px var(--shadow), 0 0 0 0 rgba(14, 90, 67, .35); } 50% { box-shadow: 0 6px 16px var(--shadow), 0 0 0 8px rgba(14, 90, 67, 0); } }

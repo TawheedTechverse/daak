@@ -278,7 +278,13 @@
     const VIDEO_ID = "6F0VIc6gG6Y";
     const btn = $("musicToggle");
     let player = null, ready = false, enabled = store.get("daak-music") !== "off";
-    const setIcon = on => { btn.textContent = on ? "🔊" : "🔈"; btn.setAttribute("aria-pressed", String(on)); btn.setAttribute("aria-label", on ? "Mute background music" : "Play background music"); };
+    const setIcon = on => {
+      btn.textContent = on ? "🔊" : "🔈"; btn.setAttribute("aria-pressed", String(on));
+      btn.setAttribute("aria-label", on ? "Mute background music" : "Play background music");
+      // a soft pulse invites a tap while sound is off but still wanted, since nothing else on
+      // screen hints that clicking this circle turns music on — browsers won't let it start alone
+      btn.classList.toggle("invite", !on && enabled);
+    };
     setIcon(false);
     // browsers never allow unmuted autoplay with no user action at all, so it starts muted and
     // loops silently; the moment the visitor taps/clicks/types anywhere (skipping the splash counts),
