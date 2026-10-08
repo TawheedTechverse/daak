@@ -290,7 +290,14 @@
       GESTURES.forEach(ev => document.removeEventListener(ev, tryUnmute));
     };
     GESTURES.forEach(ev => document.addEventListener(ev, tryUnmute, { passive: true }));
+    const fail = reason => {
+      console.warn("Daak: background music unavailable —", reason);
+      GESTURES.forEach(ev => document.removeEventListener(ev, tryUnmute));
+      btn.disabled = true; btn.style.display = "none";
+    };
+    const apiTimeout = setTimeout(() => fail("YouTube iframe API didn't load (blocked by network/extension?)"), 8000);
     window.onYouTubeIframeAPIReady = () => {
+      clearTimeout(apiTimeout);
       player = new YT.Player("ytAudio", {
         videoId: VIDEO_ID,
         // try real sound-on autoplay right from the splash — some browsers allow it once this
@@ -299,6 +306,7 @@
         // the splash's own Skip button or tapping the splash to dismiss it)
         playerVars: { autoplay: 1, loop: 1, playlist: VIDEO_ID, controls: 0, disablekb: 1, modestbranding: 1, playsinline: 1, mute: enabled ? 0 : 1 },
         events: {
+          onError: e => fail("video error code " + (e && e.data)),
           onReady: () => {
             ready = true; player.setVolume(55); player.playVideo();
             setTimeout(() => {
@@ -310,7 +318,9 @@
         }
       });
     };
-    const tag = document.createElement("script"); tag.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(tag);
+    const tag = document.createElement("script"); tag.src = "https://www.youtube.com/iframe_api";
+    tag.onerror = () => fail("iframe_api script failed to load");
+    document.head.appendChild(tag);
     btn.addEventListener("click", () => {
       if (!ready) return;
       const on = btn.getAttribute("aria-pressed") === "true";

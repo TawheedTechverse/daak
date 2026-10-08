@@ -155,16 +155,20 @@ body.bn .gallery span[data-t] { font-size: 13px; }
 .pdf-anim-label { margin-top: 22px; color: #f3ecdd; font-size: 15px; letter-spacing: .04em; text-align: center; animation: pdfStageIn .6s .15s cubic-bezier(.2, .8, .3, 1.1) both; }
 @media (prefers-reduced-motion: reduce) { .pdf-anim-stage, .pdf-anim-label { animation: none; } }
 
-/* ---------- hurricane lamp (dark mode toggle) ---------- */
-.lamp-wrap { position: fixed; top: 0; right: 18px; z-index: 25; pointer-events: none; }
+/* ---------- hurricane lamp (dark mode toggle) ----------
+   anchored to the header itself (not the viewport), so it always hangs
+   from the header's actual bottom edge — including when the header wraps
+   onto two rows on narrow screens — and never overlaps the nav buttons */
+.lamp-wrap { position: absolute; top: 100%; right: 20px; z-index: 5; pointer-events: none; }
 .lamp-toggle { pointer-events: auto; display: block; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; line-height: 0; transform-origin: 50% 16%; animation: lampSway 6s ease-in-out infinite; }
-.lamp-svg { width: min(78px, 20vw); height: auto; display: block; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .32)); overflow: visible; }
+.lamp-svg { width: min(78px, 16vw); min-width: 44px; height: auto; display: block; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .32)); overflow: visible; }
 .lamp-flame { transform-box: fill-box; transform-origin: center; opacity: .3; transition: opacity .6s ease, filter .6s ease; }
 :root[data-theme="dark"] .lamp-flame { opacity: 1; filter: drop-shadow(0 0 6px #ffce6b) drop-shadow(0 0 16px #ffb020); animation: flameFlicker 1.8s ease-in-out infinite; }
 @keyframes lampSway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
 @keyframes flameFlicker { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .8; transform: scale(.9); } }
-.lamp-glow { position: fixed; top: 4px; right: -46px; width: 260px; height: 260px; border-radius: 50%; z-index: 24; pointer-events: none; filter: blur(4px); opacity: 0; transition: opacity 1s ease; background: radial-gradient(circle, rgba(255, 186, 90, .55), rgba(255, 160, 40, .16) 45%, transparent 70%); }
+.lamp-glow { position: absolute; top: 90%; right: -40px; width: 220px; height: 220px; border-radius: 50%; z-index: 4; pointer-events: none; filter: blur(4px); opacity: 0; transition: opacity 1s ease; background: radial-gradient(circle, rgba(255, 186, 90, .55), rgba(255, 160, 40, .16) 45%, transparent 70%); }
 :root[data-theme="dark"] .lamp-glow { opacity: 1; }
+@media (max-width: 560px) { .lamp-svg { width: 54px; } .lamp-wrap { right: 12px; } .lamp-glow { width: 160px; height: 160px; right: -20px; } }
 @media (prefers-reduced-motion: reduce) { .lamp-toggle, .lamp-flame { animation: none; } }
 
 .yt-audio { position: fixed; left: -9999px; bottom: 0; width: 1px; height: 1px; overflow: hidden; }

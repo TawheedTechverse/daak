@@ -82,26 +82,25 @@
       <button type="button" data-l="bn" aria-pressed="false">বাংলা</button>
     </div>
   </div>
+  <div class="lamp-glow" aria-hidden="true"></div>
+  <div class="lamp-wrap">
+    <button type="button" class="lamp-toggle" id="lampToggle" aria-pressed="false" aria-label="Light the hurricane lamp (toggle dark mode)">
+      <svg class="lamp-svg" viewBox="0 0 64 150" aria-hidden="true">
+        <path class="lamp-rope" d="M32 0 V22" stroke="#9c8a63" stroke-width="2" fill="none"/>
+        <circle cx="32" cy="24" r="4.5" fill="none" stroke="#7a6a46" stroke-width="3"/>
+        <path d="M19 32 Q32 16 45 32" fill="none" stroke="#6b5a3a" stroke-width="3.5" stroke-linecap="round"/>
+        <rect x="20" y="30" width="24" height="9" rx="2" fill="#7a6a46"/>
+        <path d="M22 39 L17 92" stroke="#7a6a46" stroke-width="2.5" fill="none"/>
+        <path d="M42 39 L47 92" stroke="#7a6a46" stroke-width="2.5" fill="none"/>
+        <path d="M32 39 L32 92" stroke="#7a6a46" stroke-width="2" fill="none" opacity=".55"/>
+        <path d="M18 48 Q13 70 21 88 Q32 97 43 88 Q51 70 46 48 Q32 39 18 48 Z" fill="rgba(255,214,140,.16)" stroke="#a88a52" stroke-width="1.5"/>
+        <circle class="lamp-flame" cx="32" cy="70" r="7" fill="#ffce6b"/>
+        <rect x="15" y="92" width="34" height="11" rx="3" fill="#8e2318"/>
+        <rect x="21" y="103" width="22" height="7" rx="2" fill="#6b1b12"/>
+      </svg>
+    </button>
+  </div>
 </header>
-
-<div class="lamp-glow" aria-hidden="true"></div>
-<div class="lamp-wrap">
-  <button type="button" class="lamp-toggle" id="lampToggle" aria-pressed="false" aria-label="Light the hurricane lamp (toggle dark mode)">
-    <svg class="lamp-svg" viewBox="0 0 64 150" aria-hidden="true">
-      <path class="lamp-rope" d="M32 0 V22" stroke="#9c8a63" stroke-width="2" fill="none"/>
-      <circle cx="32" cy="24" r="4.5" fill="none" stroke="#7a6a46" stroke-width="3"/>
-      <path d="M19 32 Q32 16 45 32" fill="none" stroke="#6b5a3a" stroke-width="3.5" stroke-linecap="round"/>
-      <rect x="20" y="30" width="24" height="9" rx="2" fill="#7a6a46"/>
-      <path d="M22 39 L17 92" stroke="#7a6a46" stroke-width="2.5" fill="none"/>
-      <path d="M42 39 L47 92" stroke="#7a6a46" stroke-width="2.5" fill="none"/>
-      <path d="M32 39 L32 92" stroke="#7a6a46" stroke-width="2" fill="none" opacity=".55"/>
-      <path d="M18 48 Q13 70 21 88 Q32 97 43 88 Q51 70 46 48 Q32 39 18 48 Z" fill="rgba(255,214,140,.16)" stroke="#a88a52" stroke-width="1.5"/>
-      <circle class="lamp-flame" cx="32" cy="70" r="7" fill="#ffce6b"/>
-      <rect x="15" y="92" width="34" height="11" rx="3" fill="#8e2318"/>
-      <rect x="21" y="103" width="22" height="7" rx="2" fill="#6b1b12"/>
-    </svg>
-  </button>
-</div>
 
 <main class="wrap">
   <!-- ============ STAMP MAKER ============ -->
